@@ -3,7 +3,18 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#acff1c"
+    android:background="#baff2e"
     android:padding="15dp">
+    <TextView
+        android:id="@+id/ourText1"
+        android:layout_width="378dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="30dp"
+        android:text="TextCaptured"
+        android:textColor="	#FF7F50"
+        android:textStyle="bold"
+        android:textSize="25dp" />
 
     <TextView
         android:id="@+id/ourText"
@@ -11,8 +22,9 @@
         android:layout_height="49dp"
         android:layout_marginTop="30dp"
         android:text="Our Text"
-        android:textAlignment="center"
+        android:textColor="#FF7F50"
         android:textSize="25dp" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
