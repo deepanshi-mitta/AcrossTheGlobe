@@ -1,10 +1,5 @@
 package com.example.acrosstheglobe;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -12,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
@@ -31,35 +29,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         drawingView = findViewById(R.id.drawingView);
-        text=findViewById(R.id.ourText);
+        text = findViewById(R.id.ourText);
 
 
-        sync=findViewById(R.id.syncDrawingBtn);
-        mUndoButton=findViewById(R.id.mUndoButton);
-        mRedoButton=findViewById(R.id.mRedoButton);
+        sync = findViewById(R.id.syncDrawingBtn);
+        mUndoButton = findViewById(R.id.mUndoButton);
+        mRedoButton = findViewById(R.id.mRedoButton);
 
         sync.setOnClickListener(view -> {
             Bitmap bitmap = drawingView.exportDrawing();
             TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
-            if(!textRecognizer.isOperational()){
+            if (!textRecognizer.isOperational()) {
                 Toast.makeText(this, "Could not get text", Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 Frame frame = new Frame.Builder().setBitmap(bitmap).build();
                 SparseArray<TextBlock> items = textRecognizer.detect(frame);
                 StringBuilder sb = new StringBuilder();
-                for (int i=0;i<items.size();i++){
+                for (int i = 0; i < items.size(); i++) {
                     TextBlock myitem = items.valueAt(i);
                     sb.append(myitem.getValue());
                 }
-           S = (sb.toString());
-                final AlertDialog.Builder alert=new AlertDialog.Builder(MainActivity.this);
-                View mView=getLayoutInflater().inflate(R.layout.custom_dialog,null);
-                final TextView text=(TextView)mView.findViewById(R.id.ourText);
-                Button btn_ok=(Button)mView.findViewById(R.id.buttonOk);
+                S = (sb.toString());
+                final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.custom_dialog, null);
+                final TextView text = mView.findViewById(R.id.ourText);
+                Button btn_ok = mView.findViewById(R.id.buttonOk);
                 alert.setView(mView);
-                text.setText(S.toString());
-                final AlertDialog alertDialog=alert.create();
+                text.setText(S);
+                final AlertDialog alertDialog = alert.create();
                 btn_ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -82,25 +79,10 @@ public class MainActivity extends AppCompatActivity {
 
         mRedoButton.setOnClickListener(view -> {
             drawingView.redo();
-            mUndoButton.setEnabled(!drawingView.isUndoStackEmpty());
-            mRedoButton.setEnabled(!drawingView.isRedoStackEmpty());
+
         });
-//
-////Whenever the user draw somthing this method will be invoked.
-//        drawingView.setOnDrawListener(view -> {
-//            mUndoButton.setEnabled(true);
-//            mRedoButton.setEnabled(false);
-//        });
-//
-//        //drawingView.setBackgroundImage(bitmap);
-//        mUndoButton.setEnabled(false);
-//        mRedoButton.setEnabled(false);
-//        drawingView.clear();
-//        mUndoButton.setEnabled(!drawingView.isUndoStackEmpty());
-//        mRedoButton.setEnabled(!drawingView.isRedoStackEmpty());
-
 
     }
 
-    }
+}
 
